@@ -1,6 +1,346 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noah Kim</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 48px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #111;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #111;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 0.45; }
+
+    /* HERO */
+    .hero {
+      flex: 1;
+      padding: 64px 48px 0;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .hero-name {
+      font-size: clamp(72px, 13vw, 160px);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 80px;
+    }
+
+    /* ABOUT GRID */
+    .about-grid {
+      border-top: 1px solid #e5e5e5;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 48px;
+    }
+
+    .about-col {
+      padding: 40px 0;
+      padding-right: 40px;
+      border-right: 1px solid #e5e5e5;
+    }
+
+    .about-col:last-child {
+      border-right: none;
+      padding-right: 0;
+      padding-left: 40px;
+    }
+
+    .about-col:nth-child(2) {
+      padding-left: 40px;
+    }
+
+    .col-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .col-body {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #e5e5e5;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 0.06em;
+    }
+
+    footer a {
+      font-size: 11px;
+      color: #aaa;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: #111; }
+
+    /* INTERESTS PAGE (hidden by default) */
+    .page { display: none; }
+    .page.active { display: block; }
+    #home.active { display: flex; flex-direction: column; flex: 1; }
+
+    .interests-section {
+      padding: 64px 48px;
+      flex: 1;
+    }
+
+    .interests-section h2 {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 48px;
+    }
+
+    .interests-list {
+      list-style: none;
+      max-width: 600px;
+    }
+
+    .interests-list li {
+      font-size: 22px;
+      font-weight: 500;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e5e5;
+      letter-spacing: -0.01em;
+    }
+
+    .interests-list li:first-child { border-top: 1px solid #e5e5e5; }
+
+    /* CONTACT PAGE */
+    .contact-section {
+      padding: 64px 48px;
+      flex: 1;
+    }
+
+    .contact-section h2 {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 480px;
+    }
+
+    .contact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .contact-item:first-child { border-top: 1px solid #e5e5e5; }
+
+    .contact-item span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+
+    .contact-item a {
+      font-size: 14px;
+      color: #111;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-item a:hover { opacity: 0.45; }
+
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      .hero { padding: 40px 24px 0; }
+      .about-grid { grid-template-columns: 1fr; padding: 0 24px; }
+      .about-col { border-right: none; border-bottom: 1px solid #e5e5e5; padding: 28px 0 !important; }
+      .about-col:last-child { border-bottom: none; }
+      footer { padding: 20px 24px; }
+      .interests-section, .contact-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
 <body>
-<h1>Hello, I'm Noah Kim</h1>
+
+  <nav>
+    <a class="nav-logo" href="#" onclick="showPage('home')">Noah Kim</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')">About</a></li>
+      <li><a href="#" onclick="showPage('interests')">Interests</a></li>
+      <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HOME -->
+  <div id="home" class="page active" style="display:flex;flex-direction:column;flex:1;">
+    <div class="hero">
+      <p class="hero-label">Personal &mdash; 2026</p>
+      <h1 class="hero-name">Noah<br>Kim</h1>
+      <p class="hero-desc">
+        Korean. UC Berkeley Political Science &amp; Journalism.
+        Interested in how stories move between languages,
+        communities, and borders.
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-col">
+        <p class="col-label">About</p>
+        <p class="col-body">
+          Writer and researcher based between Seoul and Berkeley.
+          I think about media, identity, and the spaces language
+          creates — and closes off.
+        </p>
+      </div>
+      <div class="about-col">
+        <p class="col-label">Education</p>
+        <p class="col-body">
+          UC Berkeley<br>
+          Graduating 2026<br>
+          Political Science &amp; Journalism<br>
+          double major
+        </p>
+      </div>
+      <div class="about-col">
+        <p class="col-label">Background</p>
+        <p class="col-body">
+          Korean. Grew up between languages and two coasts.
+          Fluent in Korean and English. Reporting
+          experience across campus and national outlets.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERESTS -->
+  <div id="interests" class="page" style="display:none;flex:1;flex-direction:column;">
+    <div class="interests-section">
+      <h2>Interests</h2>
+      <ul class="interests-list">
+        <li>International media &amp; press freedom</li>
+        <li>Language, translation, and identity</li>
+        <li>Korean politics and diaspora</li>
+        <li>Longform narrative journalism</li>
+        <li>Documentary film</li>
+        <li>Border communities</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" class="page" style="display:none;flex:1;flex-direction:column;">
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <div class="contact-links">
+        <div class="contact-item">
+          <span>Email</span>
+          <a href="mailto:noahkim@berkeley.edu">noahkim@berkeley.edu</a>
+        </div>
+        <div class="contact-item">
+          <span>LinkedIn</span>
+          <a href="https://linkedin.com/in/noahkim" target="_blank">linkedin.com/in/noahkim</a>
+        </div>
+        <div class="contact-item">
+          <span>GitHub</span>
+          <a href="https://github.com/SeongheunKim" target="_blank">github.com/SeongheunKim</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>&copy; 2026 Noah Kim</span>
+    <a href="mailto:noahkim@berkeley.edu">noahkim@berkeley.edu</a>
+  </footer>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.display = id === 'home' ? 'flex' : 'flex';
+        el.style.flexDirection = 'column';
+      }
+    }
+  </script>
+
 </body>
 </html>
